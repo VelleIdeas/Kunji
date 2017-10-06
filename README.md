@@ -69,16 +69,22 @@ You’ll need to bring down completed features & hotfixes from other developers,
 git hf feature checkout ##feature-name##
 
 pull down master and develop branches
+
 git hf update
 
 merge develop into your feature branch
+
 git merge develop
 
 6. Collaborate With Others
 Push your feature branch back to GitHub whenever you need to share your changes with colleagues:
+
 git hf push
+
 Pull your colleague’s changes back to your local clone:
+
 git hf pull
 
 7. Merge Your Feature Into Develop Branch
+
 git hf push
