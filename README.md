@@ -42,9 +42,8 @@ To see all of the commands that HubFlow provides, simply run:
 git hf help
 ```
 
-# How to install hubflow in Windows?
-<blockquote align="right">— by <a href="https://github.com/abhisekp">Abhisek Pattnaik</a> &lt;<a href="mailto:abhisekp@engineer.com">abhisekp@engineer.com</a>&gt;</blockquote>
-
+### How to install hubflow in Windows?
+[https://gist.github.com/abhisekp/8f890be7f2b7bfb69603#clone-latest-hubflow]
 ### Clone latest hubflow
 ```sh
 git clone https://github.com/datasift/gitflow hubflow
