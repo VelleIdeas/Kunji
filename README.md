@@ -42,6 +42,32 @@ To see all of the commands that HubFlow provides, simply run:
 git hf help
 ```
 
+### How to install hubflow in Windows?
+[https://gist.github.com/abhisekp/8f890be7f2b7bfb69603#clone-latest-hubflow]
+### Clone latest hubflow
+```sh
+git clone https://github.com/datasift/gitflow hubflow
+cd hubflow
+```
+
+### Copy all **git-hf** prefixed files to bin directory in git installation directory
+```sh
+cp git-hf* <git-install-dir>/bin/
+cp hubflow-common <git-install-dir>/bin/
+```
+
+### Update latest **shflags** submodule
+```sh
+git submodule update --remote --init --checkout
+cp shFlags/src/shflags <git-install-dir>/bin/hubflow-shFlags
+```
+
+### Test hubflow
+```sh
+git hf help
+```
+
+
 # HubFlow Usage
 
 #### 1. Cloning A Repo
