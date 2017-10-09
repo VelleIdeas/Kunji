@@ -1,0 +1,38 @@
+Users
+	Id
+	DisplayName
+	UserName
+	psswd			-salted hash etc
+	Email
+	CreationDate
+	Reputation		-some sort of reputation score
+	UpVotes			-total upvotes for user's questions or answers
+	DownVotes		- ""
+	Age
+	AboutMe
+	
+											|--		Questions
+											|			Id
+											|			Title
+											|			Body
+											|			CreationDate
+											|			Score			-Upvote/downvote score
+											|			ViewCount		-Total views by users
+Maybe these 2 tables are just 1 table.	----|			UserId			-Original poster's id
+Since most of the fields are same.			|			Tags			-tags associated with the question. Need a better way to handle this.(?)
+We can have a parentId to differentiate		|			AnswerCount		-total answers
+between question and answer.				|			FavoriteCount	-total favorites by users
+											|		Answers
+											|			Id
+											|			QuestionId
+											|			Body
+											|			CreationDate
+											|			Score
+											|--			UserId
+	
+Votes
+	Id
+	PostId			-QuestionId/AnswerId
+	VoteType		-Up,down,favorite,report,spam etc.
+	UserId
+	CreationDate
