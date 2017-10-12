@@ -27,7 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'api',
     'import_export',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -40,10 +43,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'kunji-accounts.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    os.path.join('/Users/parmeet.singh/Kunji/Kunji/Kunji_Accounts', '/templates'),
+    os.path.join(BASE_DIR, '/templates'),
 )
 
 TEMPLATES = [
@@ -78,6 +81,11 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+      'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -116,5 +124,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = (os.path.join(BASE_DIR, 'static/static_files'))
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+
+SESSION_COOKIE_NAME = "sessionid"

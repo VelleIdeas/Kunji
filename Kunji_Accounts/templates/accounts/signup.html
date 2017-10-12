@@ -1,21 +1,33 @@
 {% extends 'base_template.html' %}
 {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    <h2>Sign Up</h2>
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-</form>
+    <form method="post" id="signupForm">
+        {% csrf_token %}
+        <h2>Sign Up</h2>
+        <p>
+            <label for="username" class="uname" data-icon="u"> Username </label>
+            <input id="username" name="username" required="required" type="text"
+                   placeholder="myusername or mymail@mail.com"/>
+        </p>
+        <p>
+            <label for="firstName" class="fname" data-icon="u"> First Name </label>
+            <input id="firstName" name="firstName" required="required" type="text"
+                   placeholder="First Name"/>
+        </p>
+        <p>
+            <label for="lastName" class="lname" data-icon="u"> Last Name </label>
+            <input id="lastName" name="lastName" required="required" type="text"
+                   placeholder="Last Name"/>
+        </p>
+        <p>
+            <label for="email" class="email" data-icon="u"> Email </label>
+            <input id="email" name="email" required="required" type="text"
+                   placeholder="Email"/>
+        </p>
+        <p>
+            <label for="password" class="youpasswd" data-icon="p"> Your password </label>
+            <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO"/>
+        </p>
+    </form>
+    <button class="sign-up-button-js" form="signupForm">Sign up</button>
 {% endblock %}

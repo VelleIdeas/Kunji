@@ -2,19 +2,17 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <h2>Profile</h2>
-        {% for field in form %}
-            <p>
-                {{ field.label_tag }}<br>
-                {{ field }}
-                {% if field.help_text %}
-                    <small style="color: grey">{{ field.help_text }}</small>
-                {% endif %}
-                {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                {% endfor %}
-            </p>
-        {% endfor %}
-        <button type="submit">Save Profile</button>
+        <h2>Welcome {{ first_name }} {{ last_name }}</h2>
+        <p>
+            <label for="university" class="university" data-icon="u"> Email </label>
+            <input id="university" name="email" type="text"
+                   placeholder="University"/>
+        </p>
+        <p>
+            <label for="location" class="location" data-icon="p"> Your password </label>
+            <input id="location" name="location" required="required" type="text" placeholder="eg. New Delhi"/>
+        </p>
+    </form>
+    <button class="profile-submit-button-js" form="profileRegisterForm">Sign up</button>
     </form>
 {% endblock %}

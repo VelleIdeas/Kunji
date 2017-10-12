@@ -1,6 +1,6 @@
-from django.conf.urls import include, url
-from views import create_user
+from django.conf.urls import url
 
+from api.views.user_register import create_user
 
 urlpatterns = [
     url(r'^createUser/$', create_user),
