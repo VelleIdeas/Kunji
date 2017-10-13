@@ -1,31 +1,25 @@
 import logging
 import json
 import re
-import ast
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.exceptions import ValidationError
 from django.db import transaction
-from rest_framework.decorators import api_view, parser_classes, permission_classes
+from django.http import HttpResponse
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework import status
-from accounts.serializers import UserSerializer
 from accounts.models import UserProfile
 from django.utils.encoding import force_text
 from rest_framework.exceptions import APIException
 from accounts.views.user_utils import create_or_edit_user
 
-
 PASSWORD_REGEX = r'^.*(?=.{6,}).*$'
 # A very rudimentary email regex. Just making sure you didn't type your
 # name in the wrong box.
 EMAIL_REGEX = r'^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*([a-zA-Z0-9-]+)?@[a-zA-Z0-9-]+(\.[a-zA-Z0-9]+)*$'
-
 
 logger = logging.getLogger(__name__)
 
@@ -55,12 +49,13 @@ def _validate_email(field, data):
         return 'This email is already registered with us.'
     return None
 
+
 _signup_field_functions = [
-    ("FirstName", _required_field),
-    ("LastName", _required_field),
-    ("Email", _validate_email),
+    ("firstName", _required_field),
+    ("lastName", _required_field),
+    ("email", _validate_email),
     ("password", _validate_password),
-    ("userType", _required_field),
+    ("username", _required_field),
 ]
 
 
@@ -83,6 +78,7 @@ class SignupJSONParser(JSONParser):
         except Exception as ex:
             logger.exception(ex)
             raise ex
+
 
 class BadRequestError(APIException):
     status_code = status.HTTP_400_BAD_REQUEST
@@ -157,6 +153,7 @@ def extract_signup_location_for_request(request_dict, request):
 @transaction.non_atomic_requests
 @api_view(['POST'])
 @permission_classes((AllowAny,))
+@parser_classes((SignupJSONParser,))
 def create_user(request):
     user_input_fields = [
         'firstName',
@@ -193,3 +190,18 @@ def create_user(request):
         "id": new_uid,
         "session_id": request.session.session_key
     })
+
+
+@api_view(['POST'])
+def create_profile(request):
+    if request.method == 'POST':
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+        data = request.data
+        data = sanitize_input_dict(data)
+
+        user_profile.university = data['university']
+        user_profile.location = data['location']
+        user_profile.save()
+
+        return Response("Success")

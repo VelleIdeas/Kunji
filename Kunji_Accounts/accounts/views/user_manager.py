@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 from django.utils.encoding import smart_text
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from accounts.views.base_user_manager import BaseUserManager
+
 from accounts.models import UserProfile
 
 _logger = logging.getLogger(__name__)
 
 
-class UserManagerImpl(BaseUserManager):
+class UserManagerImpl:
 
     def __init__(self, request_dict={}):
         self._request_dict = request_dict

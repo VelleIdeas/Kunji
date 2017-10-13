@@ -3,10 +3,13 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import logging
+from django.core.urlresolvers import reverse
 from accounts.forms.login_form import LoginForm
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 from django.contrib import messages
+from django.contrib import auth
 
 
 logger = logging.getLogger(__name__)
@@ -50,7 +53,7 @@ def user_login(request):
             )
 
             if user:
-                return success(request)
+                return HttpResponseRedirect(reverse('success'))
             else:
                 error_msg = "Your username and/or password do not match."
                 logger.debug(error_msg)
@@ -78,8 +81,11 @@ def user_login(request):
             form = LoginForm()
             storage = messages.get_messages(request)
             return render(request, 'accounts/login.html', locals())
+        else:
+            return HttpResponseRedirect(reverse('success'))
 
 
+@login_required
 def success(request):
     return render(request, 'accounts/login_success.html', {})
 
@@ -92,3 +98,9 @@ def create_profile_view(request):
         'last_name': user.last_name,
     }
     return render(request, 'accounts/profile.html', context)
+
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('login'))
