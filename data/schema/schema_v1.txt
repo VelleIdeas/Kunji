@@ -1,0 +1,30 @@
+Users
+	Id
+	UserName
+	psswd			
+	Email
+	CreationDate
+	
+    
+UserProfiles
+    UserId
+    DisplayName
+	Reputation		-some sort of reputation score
+	UpVotes			-total upvotes for user's questions or answers
+	DownVotes		- ""
+	Age
+	AboutMe
+    University(?)
+    
+Papers
+    Id
+    CreatedByUserId
+    PhotoUrl
+    
+Tags
+    Id
+    Text
+
+PaperTags
+    PaperId
+    TagId
