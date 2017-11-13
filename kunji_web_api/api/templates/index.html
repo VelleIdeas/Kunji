@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js" type="text/javascript"></script>
+<script>
+
+function OnFileSelect(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onload = (function (thefile) {
+        return function (e) {
+            var canvas = document.getElementById("myCanvas");
+            var context = canvas.getContext("2d");
+            img = new Image();
+            img.src = e.target.result;
+            console.log(e.target.result);
+            img.onload = function () {
+                canvas.height = this.height;
+                canvas.width = this.width;
+                context.drawImage(this, 0, 0, this.width, this.height);
+            }
+            upload(e.target.result);
+        };
+    })(file);
+    reader.readAsDataURL(file);
+}
+    
+    
+function upload(content) {
+    var tags_text = document.getElementById("tags");
+    var mydata = {id:123, imageData:content, tags:tags_text.value};
+    $.ajax({
+        url: '/api/upload-paper/',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(mydata),
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            console.log(result['foo']);
+            
+        }
+    });
+}
+
+</script>
+Tags:<input type="text" id="tags">
+<input type="file" onchange="OnFileSelect(this); return false">
+<canvas id="myCanvas"></canvas>
+<!--button type="button" onclick="upload()">Upload</button-->
+</body>
+</html>
