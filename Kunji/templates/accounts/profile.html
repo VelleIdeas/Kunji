@@ -1,0 +1,17 @@
+{% extends 'base_template.html' %}
+{% block content %}
+    <form method="post" id="profileRegisterForm">
+        {% csrf_token %}
+        <h2>Welcome {{ first_name }} {{ last_name }}</h2>
+        <p>
+            <label for="university" class="university" data-icon="u"> University </label>
+            <input id="university" name="university" type="text"
+                   placeholder="University"/>
+        </p>
+        <p>
+            <label for="location" class="location" data-icon="p"> Location </label>
+            <input id="location" name="location" required="required" type="text" placeholder="eg. New Delhi"/>
+        </p>
+    </form>
+    <button class="profile-submit-button-js" form="profileRegisterForm">Save</button>
+{% endblock %}

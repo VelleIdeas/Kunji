@@ -1,0 +1,30 @@
+{% extends 'base_template.html' %}
+{% block content %}
+
+    <form method="post" id="login-form">
+        {% csrf_token %}
+        <h2>Log In</h2>
+        {% if form.errors %}
+            <div class="error-msg">
+                <ul style="padding-left: 35px; margin-bottom: 0px;">
+                    {% for field, errors in form.errors.items %}
+                        <li class="{{ field }}" style="text-align: left;">
+                            {% if field == 'username' %}
+                                Email:
+                            {% else %}
+                                {{ field }}:
+                            {% endif %}
+                            {% for error in errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {{ form.username }}
+        {{ form.password }}
+
+        <button class="login-button-js" type="submit" form="login-form">SIGN IN</button>
+    </form>
+{% endblock %}
