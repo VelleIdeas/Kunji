@@ -13,7 +13,7 @@ function OnFileSelect(element) {
             var context = canvas.getContext("2d");
             img = new Image();
             img.src = e.target.result;
-            console.log(e.target.result);
+            //console.log(e.target.result);
             img.onload = function () {
                 canvas.height = this.height;
                 canvas.width = this.width;
@@ -27,8 +27,9 @@ function OnFileSelect(element) {
     
     
 function upload(content) {
-    var tags_text = document.getElementById("tags");
-    var mydata = {id:123, imageData:content, tags:tags_text.value};
+    var tags_text = document.getElementById("tags").value;
+    var tags_array = tags_text.split(",");
+    var mydata = {imageData:content, tags:tags_array};
     $.ajax({
         url: '/api/upload-paper/',
         type: 'POST',
@@ -37,8 +38,23 @@ function upload(content) {
         dataType: 'json',
         success: function(result) {
             console.log(result);
-            console.log(result['foo']);
             
+        }
+    });
+}
+
+function getPapers() {
+    var tags_text = document.getElementById("tags").value;
+    var tags_array = tags_text.split(",");
+    var mydata = {tags:tags_array};
+    $.ajax({
+        url: '/api/get-papers/',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(mydata),
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
         }
     });
 }
@@ -47,6 +63,6 @@ function upload(content) {
 Tags:<input type="text" id="tags">
 <input type="file" onchange="OnFileSelect(this); return false">
 <canvas id="myCanvas"></canvas>
-<!--button type="button" onclick="upload()">Upload</button-->
+<button type="button" onclick="getPapers()">Get Paper</button>
 </body>
 </html>
